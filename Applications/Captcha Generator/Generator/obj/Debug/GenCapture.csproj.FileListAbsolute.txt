@@ -1,0 +1,16 @@
+D:\Projekt Softcomputing\CaptureGen\CaptureGen\GenCapture\bin\Debug\GenCapture.exe
+D:\Projekt Softcomputing\CaptureGen\CaptureGen\GenCapture\bin\Debug\GenCapture.pdb
+D:\Projekt Softcomputing\CaptureGen\CaptureGen\GenCapture\obj\Debug\GenCapture.csprojResolveAssemblyReference.cache
+D:\Projekt Softcomputing\CaptureGen\CaptureGen\GenCapture\obj\Debug\GenCapture.Form1.resources
+D:\Projekt Softcomputing\CaptureGen\CaptureGen\GenCapture\obj\Debug\GenCapture.Properties.Resources.resources
+D:\Projekt Softcomputing\CaptureGen\CaptureGen\GenCapture\obj\Debug\GenCapture.csproj.GenerateResource.Cache
+D:\Projekt Softcomputing\CaptureGen\CaptureGen\GenCapture\obj\Debug\GenCapture.exe
+D:\Projekt Softcomputing\CaptureGen\CaptureGen\GenCapture\obj\Debug\GenCapture.pdb
+C:\Users\Baris\Desktop\CaptureGen\CaptureGen\GenCapture\obj\Debug\GenCapture.exe
+C:\Users\Baris\Desktop\CaptureGen\CaptureGen\GenCapture\obj\Debug\GenCapture.pdb
+C:\Users\Baris\Desktop\CaptureGen\CaptureGen\GenCapture\bin\Debug\GenCapture.exe
+C:\Users\Baris\Desktop\CaptureGen\CaptureGen\GenCapture\bin\Debug\GenCapture.pdb
+C:\Users\Baris\Desktop\CaptureGen\CaptureGen\GenCapture\obj\Debug\GenCapture.csprojResolveAssemblyReference.cache
+C:\Users\Baris\Desktop\CaptureGen\CaptureGen\GenCapture\obj\Debug\GenCapture.Form1.resources
+C:\Users\Baris\Desktop\CaptureGen\CaptureGen\GenCapture\obj\Debug\GenCapture.Properties.Resources.resources
+C:\Users\Baris\Desktop\CaptureGen\CaptureGen\GenCapture\obj\Debug\GenCapture.csproj.GenerateResource.Cache
