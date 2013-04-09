@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace GenCapture
 {
@@ -41,6 +42,27 @@ namespace GenCapture
             uint.TryParse(CharsTextbox.Text, out charsAmount);
             uint.TryParse(FilesTextbox.Text, out filesAmount);
 
+            if (!Directory.Exists(TargetTextbox.Text))
+            {
+                FilesTextbox.Focus();
+                MessageBox.Show("Please verify that your entered directory exists.", "Invalid target folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (filesAmount < 1)
+            {
+                FilesTextbox.Focus();
+                MessageBox.Show("Please create one captcha file at least.", "Invalid files input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (charsAmount < 1)
+            {
+                CharsTextbox.Focus();
+                MessageBox.Show("Please use one char in the captcha at least.", "Invalid chars input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             targetPath = TargetTextbox.Text;
             var rand = new Random();
 
@@ -74,7 +96,7 @@ namespace GenCapture
                 image.Save(targetPath + "\\" + fileName + ".png");
             }
 
-            MessageBox.Show("Captcha creation is finished.");
+            MessageBox.Show("Captcha creation is finished.", "Finished", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
