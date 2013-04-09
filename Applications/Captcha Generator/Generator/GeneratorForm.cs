@@ -11,12 +11,13 @@ namespace GenCapture
 {
     public partial class GeneratorForm : Form
     {
-        private String targetPath = @"D:\";
+        private String targetPath;
         private static char[] CHARSET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
 
         public GeneratorForm()
         {
             InitializeComponent();
+            targetPath = Directory.GetCurrentDirectory();
             TargetTextbox.Text = targetPath;
         }
 
@@ -88,7 +89,7 @@ namespace GenCapture
                     graphics.DrawLine(new Pen(color), new Point(rand.Next(0, bitmap.Width), rand.Next(0, bitmap.Height)), new Point(rand.Next(0, bitmap.Width), rand.Next(0, bitmap.Height)));
                 }
 
-                graphics.DrawString(captchaPattern, new Font(fontFamily, 20, FontStyle.Bold), brush, new PointF(0, 0));
+                graphics.DrawString(captchaPattern, new Font(fontFamily, 20, FontStyle.Italic), brush, new PointF(0, 0));
 
                 Image image = bitmap;
 
