@@ -1,6 +1,6 @@
 ﻿namespace GenCapture
 {
-    partial class Form1
+    partial class GeneratorForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,44 +28,44 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.sf_folder = new System.Windows.Forms.Button();
-            this.sf_start = new System.Windows.Forms.Button();
-            this.tb_images_amount = new System.Windows.Forms.TextBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GeneratorForm));
+            this.BrowseButton = new System.Windows.Forms.Button();
+            this.StartButton = new System.Windows.Forms.Button();
+            this.FilesTextbox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.tb_sign_amount = new System.Windows.Forms.TextBox();
-            this.tb_selected_path = new System.Windows.Forms.TextBox();
+            this.CharsTextbox = new System.Windows.Forms.TextBox();
+            this.TargetTextbox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // sf_folder
+            // BrowseButton
             // 
-            this.sf_folder.Location = new System.Drawing.Point(197, 10);
-            this.sf_folder.Name = "sf_folder";
-            this.sf_folder.Size = new System.Drawing.Size(75, 23);
-            this.sf_folder.TabIndex = 0;
-            this.sf_folder.Text = "Browse";
-            this.sf_folder.UseVisualStyleBackColor = true;
-            this.sf_folder.Click += new System.EventHandler(this.sf_folder_Click);
+            this.BrowseButton.Location = new System.Drawing.Point(197, 10);
+            this.BrowseButton.Name = "BrowseButton";
+            this.BrowseButton.Size = new System.Drawing.Size(75, 23);
+            this.BrowseButton.TabIndex = 0;
+            this.BrowseButton.Text = "Browse";
+            this.BrowseButton.UseVisualStyleBackColor = true;
+            this.BrowseButton.Click += new System.EventHandler(this.BrowseButton_Click);
             // 
-            // sf_start
+            // StartButton
             // 
-            this.sf_start.Location = new System.Drawing.Point(62, 99);
-            this.sf_start.Name = "sf_start";
-            this.sf_start.Size = new System.Drawing.Size(75, 23);
-            this.sf_start.TabIndex = 1;
-            this.sf_start.Text = "Start";
-            this.sf_start.UseVisualStyleBackColor = true;
-            this.sf_start.Click += new System.EventHandler(this.sf_start_Click);
+            this.StartButton.Location = new System.Drawing.Point(62, 99);
+            this.StartButton.Name = "StartButton";
+            this.StartButton.Size = new System.Drawing.Size(75, 23);
+            this.StartButton.TabIndex = 1;
+            this.StartButton.Text = "Start";
+            this.StartButton.UseVisualStyleBackColor = true;
+            this.StartButton.Click += new System.EventHandler(this.StartButton_Click);
             // 
-            // tb_images_amount
+            // FilesTextbox
             // 
-            this.tb_images_amount.Location = new System.Drawing.Point(61, 37);
-            this.tb_images_amount.Name = "tb_images_amount";
-            this.tb_images_amount.Size = new System.Drawing.Size(44, 20);
-            this.tb_images_amount.TabIndex = 2;
-            this.tb_images_amount.Text = "1000";
+            this.FilesTextbox.Location = new System.Drawing.Point(61, 37);
+            this.FilesTextbox.Name = "FilesTextbox";
+            this.FilesTextbox.Size = new System.Drawing.Size(44, 20);
+            this.FilesTextbox.TabIndex = 2;
+            this.FilesTextbox.Text = "1000";
             // 
             // label1
             // 
@@ -85,20 +85,20 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "Chars";
             // 
-            // tb_sign_amount
+            // CharsTextbox
             // 
-            this.tb_sign_amount.Location = new System.Drawing.Point(62, 63);
-            this.tb_sign_amount.Name = "tb_sign_amount";
-            this.tb_sign_amount.Size = new System.Drawing.Size(44, 20);
-            this.tb_sign_amount.TabIndex = 4;
-            this.tb_sign_amount.Text = "6";
+            this.CharsTextbox.Location = new System.Drawing.Point(62, 63);
+            this.CharsTextbox.Name = "CharsTextbox";
+            this.CharsTextbox.Size = new System.Drawing.Size(44, 20);
+            this.CharsTextbox.TabIndex = 4;
+            this.CharsTextbox.Text = "6";
             // 
-            // tb_selected_path
+            // TargetTextbox
             // 
-            this.tb_selected_path.Location = new System.Drawing.Point(62, 12);
-            this.tb_selected_path.Name = "tb_selected_path";
-            this.tb_selected_path.Size = new System.Drawing.Size(129, 20);
-            this.tb_selected_path.TabIndex = 6;
+            this.TargetTextbox.Location = new System.Drawing.Point(62, 12);
+            this.TargetTextbox.Name = "TargetTextbox";
+            this.TargetTextbox.Size = new System.Drawing.Size(129, 20);
+            this.TargetTextbox.TabIndex = 6;
             // 
             // label3
             // 
@@ -109,22 +109,23 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Target";
             // 
-            // Form1
+            // GeneratorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 143);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.tb_selected_path);
+            this.Controls.Add(this.TargetTextbox);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.tb_sign_amount);
+            this.Controls.Add(this.CharsTextbox);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.tb_images_amount);
-            this.Controls.Add(this.sf_start);
-            this.Controls.Add(this.sf_folder);
+            this.Controls.Add(this.FilesTextbox);
+            this.Controls.Add(this.StartButton);
+            this.Controls.Add(this.BrowseButton);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "GeneratorForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Capture Generator";
             this.ResumeLayout(false);
@@ -134,13 +135,13 @@
 
         #endregion
 
-        private System.Windows.Forms.Button sf_folder;
-        private System.Windows.Forms.Button sf_start;
-        private System.Windows.Forms.TextBox tb_images_amount;
+        private System.Windows.Forms.Button BrowseButton;
+        private System.Windows.Forms.Button StartButton;
+        private System.Windows.Forms.TextBox FilesTextbox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tb_sign_amount;
-        private System.Windows.Forms.TextBox tb_selected_path;
+        private System.Windows.Forms.TextBox CharsTextbox;
+        private System.Windows.Forms.TextBox TargetTextbox;
         private System.Windows.Forms.Label label3;
     }
 }
