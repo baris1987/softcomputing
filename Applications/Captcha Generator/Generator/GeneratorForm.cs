@@ -70,7 +70,7 @@ namespace GenCapture
             for (int i = 0; i < filesAmount; i++)
             {
                 string captchaPattern = "";
-                var bitmap = new Bitmap(170, 40);
+                var bitmap = new Bitmap(170, 35);
                 
                 Graphics graphics = Graphics.FromImage(bitmap);
                 graphics.Clear(Color.White);
@@ -80,15 +80,28 @@ namespace GenCapture
                     captchaPattern += CHARSET[rand.Next(0, CHARSET.Length)] + " ";
                 }
 
+                int colorChange = 64;
                 var fontFamily = new FontFamily("Arial");
-                var brush = new SolidBrush(Color.FromArgb(0xFF, rand.Next(0, 200), rand.Next(0, 200), rand.Next(0, 200)));
+                var brush = new SolidBrush(Color.FromArgb(0xFF, rand.Next(0, colorChange), rand.Next(0, colorChange), rand.Next(0, colorChange)));
 
-                for (int j = 0; j < 10; j++)
+                colorChange++;
+                for (int j = 0; j < bitmap.Width; j +=8)
                 {
-                    var color = Color.FromArgb(0xFF, rand.Next(0, 255), rand.Next(0, 255), rand.Next(0, 255));
-                    graphics.DrawLine(new Pen(color), new Point(rand.Next(0, bitmap.Width), rand.Next(0, bitmap.Height)), new Point(rand.Next(0, bitmap.Width), rand.Next(0, bitmap.Height)));
+                    var color = Color.FromArgb(0xFF, rand.Next(colorChange, 255), rand.Next(colorChange, 255), rand.Next(colorChange, 255));
+                    graphics.DrawLine(new Pen(color), new Point(j, 0), new Point(j, bitmap.Height));
                 }
 
+                for (int j = 0; j < bitmap.Height; j += 8)
+                {
+                    var color = Color.FromArgb(0xFF, rand.Next(colorChange, 255), rand.Next(colorChange, 255), rand.Next(colorChange, 255));
+                    graphics.DrawLine(new Pen(color), new Point(0, j), new Point(bitmap.Width, j));
+                }
+
+                for (int j = 0; j <10; j ++)
+                {
+                    var color = Color.FromArgb(0xFF, rand.Next(colorChange, 255), rand.Next(colorChange, 255), rand.Next(colorChange, 255));
+                    graphics.DrawEllipse(new Pen(new SolidBrush(color) , 3), rand.Next(20, bitmap.Width), rand.Next(0, bitmap.Height / 2), rand.Next(20, 70), rand.Next(20, 70));
+                }
                 graphics.DrawString(captchaPattern, new Font(fontFamily, 20, FontStyle.Italic), brush, new PointF(0, 0));
 
                 Image image = bitmap;
