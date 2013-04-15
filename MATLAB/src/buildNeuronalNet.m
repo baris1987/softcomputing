@@ -13,10 +13,10 @@ function net = buildNeuronalnet(x,y,in,out)
     net = patternnet(10);
 
     % Jedes Pixel ist ein Eingabewert ins neuronale Netz.
-    net.inputNum = x*y;
+    net.numInput = x*y;
     
     % 10 Zahlen und 26 Buchstaben
-    net.outputNum = 36;
+    net.numOutput = 36;
     
     % Netzwerk trainieren.
     train(net,in,out);
