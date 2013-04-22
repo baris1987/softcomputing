@@ -5,7 +5,7 @@ function [retVal] = segment(bounded)
 % Created by Kurt Alfred Kluever (kurt@kloover.com)
 
     % Create the return value (5 images, 20x20 in size)
-    retVal = zeros(25, 20, 6);
+    retVal = zeros(30, 30, 6);
     
     % Get the size of the input image
     [rows cols] = size(bounded);
@@ -27,8 +27,8 @@ function [retVal] = segment(bounded)
         
         % Pad out to 20 rows and 20 cols with 0's
         [charRows charCols] = size(a);
-        a = padarray(a, [(25 - charRows) (20 - charCols)], 'post');
-        
+        a = padarray(a, [(30 - charRows) (30 - charCols)], 'post');
+              
         % Set the character into the return value
         retVal(:,:,charIndex) = a;
         

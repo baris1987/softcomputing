@@ -5,11 +5,11 @@ function makeTemplates()
 % Created by Kurt Alfred Kluever (kurt@kloover.com)
 
     % Set aside room for the templates and the counts
-    templates = zeros(20,20,36);
+    templates = zeros(30,30,36);
     counts = zeros(1,36);
 
     % Load the images from the training directory
-    trainingDir = 'training/';    
+    trainingDir = 'D:/Github/softcomputing/MATLAB/images/';    
     trainingSamples = dir(strcat(trainingDir, '*.png'));
     [numTrainingSamples] = size(trainingSamples);
     
@@ -27,7 +27,7 @@ function makeTemplates()
         filename = strrep(filename, trainingDir, '');
         
         % For each of the characters...
-        for i=1:5
+        for i=1:6
             % Convert from ASCII character to ASCII int (an index)
             asciiz = uint8(filename(i));
             if (asciiz >= 48 && asciiz <= 57) % number

@@ -13,13 +13,13 @@ function [decoded confidence] = classify(chars, method)
     warning off MATLAB:divideByZero
 
     % Setup the decoded result
-    decoded = char(zeros(1,5));
+    decoded = char(zeros(1,6));
 
     % Confidence starts at 1.0 (perfect)
     confidence = 1.0;
 
     % For each of the 5 characters in the image...
-    for i=1:5
+    for i=1:6
 
         % Correlation results for all the template images
         allCorrs = zeros(1, 36);
