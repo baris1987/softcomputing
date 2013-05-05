@@ -12,7 +12,7 @@ function makeTemplates()
     trainingDir = 'training/';    
     trainingSamples = dir(strcat(trainingDir, '*.png'));
     [numTrainingSamples] = size(trainingSamples);
-    
+    net = patternnet(10);
     % For each of the training images...
     for i=1:numTrainingSamples
         filename = strcat(trainingDir, trainingSamples(i).name);  
@@ -37,20 +37,22 @@ function makeTemplates()
             else
                 % We should never, ever get here!
             end
-
+            
+            net = train(net,chars(:,:,i),asciiz);
             % Add the template to the training library
-            templates(:,:,asciiz) = templates(:,:,asciiz) + chars(:,:,i);
+            %templates(:,:,asciiz) = templates(:,:,asciiz) + chars(:,:,i);
 
             % Update the number of times we have seen this character
-            counts(asciiz) = counts(asciiz) + 1;
+            %counts(asciiz) = counts(asciiz) + 1;
         end
     end
     
     % Go through and normalize (average) the templates
-    for i=1:36
-        templates(:,:,i) = templates(:,:,i) / counts(i);
-    end
+    %for i=1:36
+    %    templates(:,:,i) = templates(:,:,i) / counts(i);
+    %end
     
     % Save them out to the file for later
-    save('templates.mat', 'templates', 'counts');
+    %save('templates.mat', 'templates', 'counts');
+    save('neuronal.mat', 'net');
 end

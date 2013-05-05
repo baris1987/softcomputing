@@ -1,5 +1,7 @@
 function [decoded confidence] = classify(chars, method)
-% Performs character classification of the segmented input image
+% Performs character classification of the segmented input image using
+% pixel counts, vertical projections, horizontal projections, or template
+% matching.
 
     % Load the templates
     load neuronal;
@@ -20,9 +22,23 @@ function [decoded confidence] = classify(chars, method)
         inHP = sum(chars(:,:,i)',2);
         res = net([inVP;inHP]);
    
+            %if (strcmp(method, 'PixelCounts') == 1)
+             %   tempSum = sum(sum(templates(:,:,j)));
+             %   inSum = sum(sum(chars(:,:,i)));
+             %  allCorrs(j) = 50 - abs(tempSum - inSum);
+           % else % Do template matching by default
+           %     temp = templates(:,:,j);
+           %     in = chars(:,:,i);
+           %     allCorrs(j) = corr2(temp, in);
+         %   end
+       % end
+
         % Find the first template with the best correlation
         index = find(res == max(res), 1);
         
+        % Update the classification confidence
+        %confidence = max(allCorrs) * confidence;
+
         % Convert it from an index back into ASCII
         if (index <= 10) % number
             index = index + 47;
