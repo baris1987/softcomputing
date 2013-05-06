@@ -8,7 +8,7 @@ function decoded = recognize(imageFileName)
     % If the templates haven't been created yet, make them now!
     if (exist('neuronal.mat', 'file') == 0)
         fprintf('Training templates do not exist. Creating them now...');
-        chrMakeTemplates();
+        buildNetwork();
         fprintf('DONE\n');
     end
     

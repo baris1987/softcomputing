@@ -1,5 +1,11 @@
 function confidences = recognizeAll()
 
+    if (exist('neuronal.mat', 'file') == 0)
+        fprintf('Training templates do not exist. Creating them now...');
+        buildNetwork();
+        fprintf('DONE\n');
+    end
+
     testingDir = 'D:/Github/softcomputing/MATLAB/images/Test/';    
     testingSamples = dir(strcat(testingDir, '*.png'));
     [numTestingSamples] = size(testingSamples);

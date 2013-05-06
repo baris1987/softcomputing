@@ -1,4 +1,4 @@
-function chrMakeTemplates()
+function buildNetwork()
 
     % Load the images from the training directory
     trainingDir = 'D:\Uni\softcomputing\MATLAB\images/Training/';    
