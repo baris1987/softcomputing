@@ -1,4 +1,4 @@
-function confidences = recognizeAll()
+function recognizeAll()
 
     testingDir = '../images/Test/';
     

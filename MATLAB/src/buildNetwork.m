@@ -1,9 +1,8 @@
 function buildNetwork()
-    tesat = pwd;
-    
+       
     % Load the images from the training directory
     trainingDir = '../images/Training/';
-    
+    RandStream.setGlobalStream(RandStream('mt19937ar','seed',1)); 
     % trainingDir = 'D:/Github/softcomputing/MATLAB/images/Training/';    
     trainingSamples = dir(strcat(trainingDir, '*.png'));
     [numTrainingSamples] = size(trainingSamples);
@@ -11,7 +10,7 @@ function buildNetwork()
     in = zeros(60,trainingSamplesSize);
     out = zeros(36,trainingSamplesSize);
     % Create a Pattern Recognition Network
-    hiddenLayerSize = 40;
+    hiddenLayerSize = 44;
     net = patternnet(hiddenLayerSize);
 
     % Setup Division of Data for Training, Validation, Testing
@@ -54,12 +53,12 @@ function buildNetwork()
         end
     end
    % Train the Network
-    [net,tr] = train(net,in,out);
+    net = train(net,in,out);
 
     % Test the Network
-    outputs = net(in);
-    errors = gsubtract(out,outputs);
-    performance = perform(net,out,outputs)
+  %  outputs = net(in);
+  %  errors = gsubtract(out,outputs);
+  %  performance = perform(net,out,outputs)
 
     % View the Network
     view(net);

@@ -3,10 +3,6 @@ function decoded = classify(chars)
 
     % Load the templates
     load neuronal;
-
-    % Turn off the warnings about dividing by zero
-    warning off MATLAB:divideByZero
-
     % Setup the decoded result
     decoded = char(zeros(1,6));
 
