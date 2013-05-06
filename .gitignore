@@ -15,6 +15,7 @@ TestResults
 Thumbs.db
 *.asv
 *.mat
+.DS_Store
 
 # Build results
 [Dd]ebug/
