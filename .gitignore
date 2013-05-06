@@ -13,6 +13,7 @@ TestResults
 *.user
 *.sln.docstates
 Thumbs.db
+*.asv
 
 # Build results
 [Dd]ebug/
