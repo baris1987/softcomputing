@@ -1,5 +1,6 @@
 function buildNetwork()
-
+    tesat = pwd;
+    
     % Load the images from the training directory
     trainingDir = '../images/Training/';
     
