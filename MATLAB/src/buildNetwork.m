@@ -64,5 +64,5 @@ function buildNetwork()
     view(net);
 
     % Save them out to the file for later
-    save('neuronal.mat', 'net', 'in', 'out');
+    save('neuronal.mat', 'net');
 end
