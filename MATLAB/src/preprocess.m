@@ -10,14 +10,14 @@ function bounded = preprocess(i)
   
     % Bild in Graustufen umwandeln
     greyScale = rgb2gray(i);
-    subplot(4,1,2);
-    imshow(greyScale);
+  %  subplot(4,1,2);
+   % imshow(greyScale);
     title('After rgb2gray');
     % Nur noch die Textfrabe wird angezeigt
     thresholded = greyScale < 65;
-    subplot(4,1,3);
-    imshow(thresholded);
-    title('After cleaning');
+    %subplot(4,1,3);
+   % imshow(thresholded);
+   % title('After cleaning');
 
     
   
@@ -26,7 +26,7 @@ function bounded = preprocess(i)
 
     % Crop out the contents of the bounding box
     bounded = imcrop(thresholded, bb.BoundingBox);
-    subplot(4,1,4);
-    imshow(bounded);
-    title('After cutting');
+    %subplot(4,1,4);
+    %imshow(bounded);
+   % title('After cutting');
 end
