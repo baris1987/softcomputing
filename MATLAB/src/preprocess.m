@@ -12,7 +12,7 @@ function bounded = preprocess(i)
     greyScale = rgb2gray(i);
   %  subplot(4,1,2);
    % imshow(greyScale);
-    title('After rgb2gray');
+   % title('After rgb2gray');
     % Nur noch die Textfrabe wird angezeigt
     thresholded = greyScale < 65;
     %subplot(4,1,3);
