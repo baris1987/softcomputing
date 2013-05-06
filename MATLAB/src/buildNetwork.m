@@ -1,7 +1,9 @@
 function buildNetwork()
 
     % Load the images from the training directory
-    trainingDir = 'D:\Uni\softcomputing\MATLAB\images/Training/';    
+    trainingDir = '../images/Training/';
+    
+    % trainingDir = 'D:/Github/softcomputing/MATLAB/images/Training/';    
     trainingSamples = dir(strcat(trainingDir, '*.png'));
     [numTrainingSamples] = size(trainingSamples);
  	trainingSamplesSize = numTrainingSamples(1,1) * 6;

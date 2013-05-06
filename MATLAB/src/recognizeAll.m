@@ -1,5 +1,8 @@
 function confidences = recognizeAll()
 
+    testingDir = 'Testing/';
+    
+    testingSamples = dir(strcat(testingDir, '*.jpg'));
     if (exist('neuronal.mat', 'file') == 0)
         fprintf('Training templates do not exist. Creating them now...');
         buildNetwork();
