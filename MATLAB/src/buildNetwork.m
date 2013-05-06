@@ -1,10 +1,7 @@
 function chrMakeTemplates()
 
-    fold = pwd
-    msgbox(fold)
-
     % Load the images from the training directory
-    trainingDir = '../src'
+    trainingDir = '../images/Training/';
     
     % trainingDir = 'D:/Github/softcomputing/MATLAB/images/Training/';    
     trainingSamples = dir(strcat(trainingDir, '*.png'));

@@ -4,7 +4,7 @@ function confidences = recognizeAll()
 %
 % Created by Kurt Alfred Kluever (kurt@kloover.com)
 
-    testingDir = 'testing/';
+    testingDir = 'Testing/';
     
     testingSamples = dir(strcat(testingDir, '*.jpg'));
     
