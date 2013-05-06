@@ -1,8 +1,6 @@
 function [retVal] = segment(bounded)
 % Performs character segmentation of the preprocessed input image.
 % Returns the segmented set of characters.
-%
-% Created by Kurt Alfred Kluever (kurt@kloover.com)
 
     % Create the return value (6 images, 30x30 in size)
     retVal = zeros(30, 30, 6);

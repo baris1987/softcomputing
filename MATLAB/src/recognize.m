@@ -1,9 +1,4 @@
 function decoded = recognize(imageFileName)
-% Performs recognition of PayPal CAPTCHA images by preprocessing,
-% segmentation, and classification. To switch which classifier is being
-% used, simply uncomment out the one you wish to use!
-%
-% Created by Kurt Alfred Kluever (kurt@kloover.com)
 
     % If the templates haven't been created yet, make them now!
     if (exist('neuronal.mat', 'file') == 0)

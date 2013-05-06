@@ -17,6 +17,7 @@ function confidences = recognizeAll()
     
     charCorrect = 0;
     charWrong = 0;
+    captureWrong = 0;
     
     % For each of the testing images...
     for i=1:numTestingSamples
@@ -36,6 +37,7 @@ function confidences = recognizeAll()
        fprintf('%d Actual: %s Decoded: %s', i, filename, chars);
        if (strcmp(filename, chars) == 0)
            fprintf(' Incorrect\n');
+           captureWrong = captureWrong + 1;
        else
            fprintf(' Correct\n');
        end
@@ -50,5 +52,7 @@ function confidences = recognizeAll()
     end
        
     charAcc = charCorrect / (charCorrect + charWrong);
+    capAcc = (numTestingSamples - captureWrong) / numTestingSamples;
     fprintf('Character Accuracy: %f\n', charAcc);
+    fprintf('Capture Accuracy: %f\n', capAcc);
 end

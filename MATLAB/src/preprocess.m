@@ -1,12 +1,5 @@
 function bounded = preprocess(i)
-% Performs preprocessing on the input image. The image is first converted
-% to greyscale and then thresholded. Random noise is removed via
-% thresholding. A bounding box is then placed around the entire image.
-% Returns the preprocessed image.
-%
-% Created by Kurt Alfred Kluever (kurt@kloover.com)
-
-
+% Performs preprocessing on the input image.
   
     % Bild in Graustufen umwandeln
     greyScale = rgb2gray(i);
