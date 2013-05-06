@@ -14,6 +14,7 @@ TestResults
 *.sln.docstates
 Thumbs.db
 *.asv
+*.mat
 
 # Build results
 [Dd]ebug/
