@@ -1,4 +1,4 @@
-function [decoded confidence] = classify(chars, method)
+function decoded = classify(chars)
 % Performs character classification of the segmented input image
 
     % Load the templates
@@ -9,9 +9,6 @@ function [decoded confidence] = classify(chars, method)
 
     % Setup the decoded result
     decoded = char(zeros(1,6));
-
-    % Confidence starts at 1.0 (perfect)
-    confidence = 1.0;
 
     % For each of the 6 characters in the image...
     for i=1:6

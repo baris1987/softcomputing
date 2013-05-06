@@ -1,4 +1,4 @@
-function chrMakeTemplates()
+function buildNetwork()
 
     % Load the images from the training directory
     trainingDir = '../images/Training/';
@@ -6,7 +6,7 @@ function chrMakeTemplates()
     % trainingDir = 'D:/Github/softcomputing/MATLAB/images/Training/';    
     trainingSamples = dir(strcat(trainingDir, '*.png'));
     [numTrainingSamples] = size(trainingSamples);
- 	trainingSamplesSize = numTrainingSamples(1,2) * 6;
+ 	trainingSamplesSize = numTrainingSamples(1,1) * 6;
     in = zeros(60,trainingSamplesSize);
     out = zeros(36,trainingSamplesSize);
     % Create a Pattern Recognition Network
@@ -61,7 +61,7 @@ function chrMakeTemplates()
     performance = perform(net,out,outputs)
 
     % View the Network
-    view(net)
+    view(net);
 
     % Save them out to the file for later
     save('neuronal.mat', 'net', 'in', 'out');
