@@ -54,5 +54,5 @@ function recognizeAll()
     charAcc = charCorrect / (charCorrect + charWrong);
     capAcc = (numTestingSamples - captureWrong) / numTestingSamples;
     fprintf('Character Accuracy: %f\n', charAcc);
-    fprintf('Capture Accuracy: %f\n', capAcc);
+    fprintf('Captcha Accuracy: %f\n', capAcc);
 end
