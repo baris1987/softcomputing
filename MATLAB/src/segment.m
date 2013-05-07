@@ -5,10 +5,7 @@ function [retVal] = segment(bounded)
 
     % Create the return value (6 images, 30x30 in size)
     retVal = zeros(30, 30, 6);
-    
-    % Get the size of the input image
-    [rows, cols] = size(bounded);
-    
+
     % Pass a number from 1 to 6 to each character 
     cc = bwconncomp(bounded);
     labeled = labelmatrix(cc);
