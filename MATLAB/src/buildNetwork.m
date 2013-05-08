@@ -1,8 +1,9 @@
+
 function buildNetwork()
        
     % Load the images from the training directory
     trainingDir = '../images/Training/';
-    RandStream.setGlobalStream(RandStream('mt19937ar','seed',1)); 
+    %RandStream.setGlobalStream(RandStream('mt19937ar','seed',1)); 
     % trainingDir = 'D:/Github/softcomputing/MATLAB/images/Training/';    
     trainingSamples = dir(strcat(trainingDir, '*.png'));
     [numTrainingSamples] = size(trainingSamples);
@@ -10,7 +11,7 @@ function buildNetwork()
     in = zeros(60,trainingSamplesSize);
     out = zeros(36,trainingSamplesSize);
     % Create a Pattern Recognition Network
-    hiddenLayerSize = 44;
+    hiddenLayerSize = 38;
     net = patternnet(hiddenLayerSize);
 
     % Setup Division of Data for Training, Validation, Testing
@@ -61,7 +62,7 @@ function buildNetwork()
   %  performance = perform(net,out,outputs)
 
     % View the Network
-    view(net);
+   % view(net);
 
     % Save them out to the file for later
     save('neuronal.mat', 'net');

@@ -1,8 +1,6 @@
-function recognizeAll()
+function[charAcc, capAcc] = recognizeAll()
 
     testingDir = '../images/Test/';
-    
-    pwd
     
     if (exist('neuronal.mat', 'file') == 0)
         fprintf('Training templates do not exist. Creating them now...');
@@ -10,7 +8,6 @@ function recognizeAll()
         fprintf('DONE\n');
     end
 
-    %testingDir = 'D:/Github/softcomputing/MATLAB/images/Test/';    
     testingSamples = dir(strcat(testingDir, '*.png'));
 
     numTestingSamples = size(testingSamples, 1);

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Drawing.Drawing2D;
 
 namespace GenCapture
 {
@@ -70,14 +71,14 @@ namespace GenCapture
             for (int i = 0; i < filesAmount; i++)
             {
                 string captchaPattern = "";
-                var bitmap = new Bitmap(170, 35);
+                var bitmap = new Bitmap(190, 35);
                 
                 Graphics graphics = Graphics.FromImage(bitmap);
                 graphics.Clear(Color.White);
 
                 for (int j = 0; j < charsAmount; j++)
                 {
-                    captchaPattern += CHARSET[rand.Next(0, CHARSET.Length)] + " ";
+                    captchaPattern += CHARSET[rand.Next(0, CHARSET.Length)];
                 }
 
                 int colorChange = 64;
@@ -102,8 +103,22 @@ namespace GenCapture
                     var color = Color.FromArgb(0xFF, rand.Next(colorChange, 255), rand.Next(colorChange, 255), rand.Next(colorChange, 255));
                     graphics.DrawEllipse(new Pen(new SolidBrush(color) , 3), rand.Next(20, bitmap.Width), rand.Next(0, bitmap.Height / 2), rand.Next(20, 70), rand.Next(20, 70));
                 }
-                graphics.DrawString(captchaPattern, new Font(fontFamily, 20, FontStyle.Italic), brush, new PointF(0, 0));
 
+                int char_width = (int)(bitmap.Width / 6);
+                for (int j = 0; j < captchaPattern.Length; j++)
+                {
+                    int angle = rand.Next(-30, 30);
+
+                    float dx = (float)(j * char_width + char_width / 2);
+                    float dy = (float)(bitmap.Height / 2);
+                    graphics.TranslateTransform(-dx, -dy, MatrixOrder.Append);
+
+                    graphics.RotateTransform(angle, MatrixOrder.Append);
+                    graphics.TranslateTransform(dx, dy, MatrixOrder.Append);
+                    graphics.DrawString(captchaPattern[j].ToString(), new Font(fontFamily, 19, FontStyle.Italic), brush, new PointF(j * char_width, rand.Next(4,8)));
+                    graphics.ResetTransform();
+                }
+                
                 Image image = bitmap;
 
                 string fileName = captchaPattern.Replace(" ", "");
@@ -112,5 +127,8 @@ namespace GenCapture
 
             MessageBox.Show("Captcha creation is finished.", "Finished", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+     
+        
     }
 }
