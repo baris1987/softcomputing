@@ -1,44 +1,40 @@
 function[charAcc, capAcc] = recognizeAll()
 
     testingDir = '../images/Test/';
-    
+    % Prüft ob das Neuronale Netz existiert, falls nicht wird die
+    % Generierung angestoßen
     if (exist('neuronal.mat', 'file') == 0)
-        fprintf('Training templates do not exist. Creating them now...');
+        fprintf('Neuronales Netz existiert nicht und wird jetzt generiert ...');
         buildNetwork();
-        fprintf('DONE\n');
+        fprintf('Fertig\n');
     end
 
+    % Zählt die Anzahl der vorhanden Bilder des Verzeichnises
     testingSamples = dir(strcat(testingDir, '*.png'));
-
     numTestingSamples = size(testingSamples, 1);
     
     charCorrect = 0;
     charWrong = 0;
     captureWrong = 0;
-    
-    % For each of the testing images...
+
     for i=1:numTestingSamples
         
-        filename = strcat(testingDir, testingSamples(i).name);  
-        % Remove the directory name from the filename
-        filename = strrep(filename, testingDir, '');
-               
-       % Perform recognition and record the result and confidence
-       chars = recognize(filename);
+        filename =  testingSamples(i).name;
+        % Übergibt das Bild der recognize Funktion und erhält die vom
+        % Neuronalen Netz erkannten Buchstaben zurück
+        chars = recognize(strcat(testingDir,filename));
+        filename = strrep(filename, '.png', '');
        
-     
-       filename = strrep(filename, testingDir, '');
-       filename = strrep(filename, '.png', '');
-       
-       % Print out the results
-       fprintf('%d Actual: %s Decoded: %s', i, filename, chars);
+        
+       fprintf('%d\t Aktuell: %s\t Erkannt: %s\t', i, filename, chars);
+       % Prüft komplettes Captcha auf Übereinstimmung
        if (strcmp(filename, chars) == 0)
-           fprintf(' Incorrect\n');
+           fprintf(' NOK\n');
            captureWrong = captureWrong + 1;
        else
-           fprintf(' Correct\n');
+           fprintf(' OK\n');
        end
-       
+       % Prüft einzellne Buchstaben auf Übereinstimmung
        for j=1:6
           if (strcmp(filename(j), chars(j)) == 0) 
               charWrong = charWrong + 1;
@@ -50,6 +46,6 @@ function[charAcc, capAcc] = recognizeAll()
        
     charAcc = charCorrect / (charCorrect + charWrong);
     capAcc = (numTestingSamples - captureWrong) / numTestingSamples;
-    fprintf('Character Accuracy: %f\n', charAcc);
-    fprintf('Captcha Accuracy: %f\n', capAcc);
+    fprintf('Buchstaben Erkennungsrate: %f\n', charAcc);
+    fprintf('Captcha Erkennungsrate: %f\n', capAcc);
 end

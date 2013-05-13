@@ -1,31 +1,31 @@
+% Berechnet den Input fürs Neuronale Netz und stellt die Anfrage ans
+% Neuronale Netz
 function decoded = classify(chars)
-% Performs character classification of the segmented input image
-
-    % Load the templates
+    % Lädt das Neuronale Netz
     load neuronal;
-    % Setup the decoded result
+    % Erstellt die Rückgabevariable der Anzahl von 6 Buchstaben
     decoded = char(zeros(1,6));
-
-    % For each of the 6 characters in the image...
+    
     for i=1:6
 
+        % Summiert die Vertikalen und Horizontalen Pixel auf und übergibt
+        % diese dem Neuronalen Netz
         inVP = sum(chars(:,:,i),2);
         inHP = sum(chars(:,:,i)',2);
         res = net([inVP;inHP]);
    
-        % Find the first template with the best correlation
+        % Sucht den Rückgabewert mit der besten Korrelation
         index = find(res == max(res), 1);
         
-        % Convert it from an index back into ASCII
-        if (index <= 10) % number
+        % Konvertiert das Rückgabeergebniss zurück zu einem ASCII
+        % Buchstaben
+        % Nummer 1 - 10, Buchstabe 11 - 36
+        if (index <= 10)
             index = index + 47;
-        elseif (index >= 11 && index <= 36)% upper case character
+        elseif (index >= 11 && index <= 36)
             index = index + 54;
-        else
-            % We should never get here
         end
-        
-        % Store the decoded character
+        % Speichert den gefundenen Buchstaben in der Rückgabevariable
         decoded(i) = char(index);
     end
 end

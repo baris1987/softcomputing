@@ -1,29 +1,29 @@
+% Segmentiert das übergebene Bild und gibt die einzellnen Segmente zurück
 function [retVal] = segment(bounded)
-% Performs character segmentation of the preprocessed input image.
 
-% Returns the segmented set of characters.
-
-    % Create the return value (6 images, 30x30 in size)
+    % Legt die Rückgabe Matrix auf die Größe auf 30x30 pro Buchstabe fest
     retVal = zeros(30, 30, 6);
 
-    % Pass a number from 1 to 6 to each character 
+    % Findet die einzellnen Buchstaben und gibt den Pixeln Nummern von 1-6
     cc = bwconncomp(bounded);
     labeled = labelmatrix(cc);
   
     charIndex = 1;
     while (charIndex <= 6)
-        % Get the position from the pixle of the character
+        % Sucht die Position der einzellnen Pixel mit der gegebenen
+        % Buchstabenposition
         [yPx,xPx] = find(labeled == charIndex);
-        % Create a new empty image with the size of the original
+        % Erstellt ein neues Bild mit der Größe des Eingabebildes
         singleChar = zeros(size(bounded)); 
-        % Add only the charater at the given index to the image
+        % Fügt die Pixel des einzelnen Buchstaben in die leere Matrix ein
         singleChar(labeled == charIndex)= bounded(labeled == charIndex); 
-        % Crop the image at the size of the character
+        % Kürzt das Bild auf die exakte Größe des Buchstaben
         a = imcrop(singleChar, [min(xPx),  min(yPx),  max(xPx) - min(xPx), max(yPx) -  min(yPx)]);
         [charRows, charCols] = size(a);
-        % Add the character to a matrix with the size of 30x30
+        % Ändert die Matrixgröße auf 30x30 und schiebt den Buchstaben in
+        % die obere linke Ecke
         a = padarray(a, [(30 - charRows) (30 - charCols)], 'post');
-        % Store the image in the return value
+        % Speichert das Bild in den Returnwert
         retVal(:,:,charIndex) = a;
         charIndex = charIndex + 1;
     end

@@ -1,18 +1,19 @@
 function decoded = recognize(imageFileName)
 
-    % If the templates haven't been created yet, make them now!
+    % Prüft ob das Neuronale Netz existiert, falls nicht wird die
+    % Generierung angestoßen
     if (exist('neuronal.mat', 'file') == 0)
-        fprintf('Training templates do not exist. Creating them now...');
+        fprintf('Neuronales Netz existiert nicht und wird jetzt generiert ...');
         buildNetwork();
-        fprintf('DONE\n');
+        fprintf('Fertig\n');
     end
     
-    % 1. Load and preprocess the image
+    % 1. Lädt das Bild und führt das Preprocessing durch
     preprocessed = preprocess(imread(imageFileName));
     
-    % 2. Segmentation the image into characters
+    % 2. Segmentiert das Bild
     segmented = segment(preprocessed);
     
-    % 3. Classifiy the characters
+    % 3. Decodiert die Buchstaben
     decoded = classify(segmented);
 end
