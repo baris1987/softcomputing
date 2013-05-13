@@ -107,7 +107,10 @@ namespace GenCapture
                 int char_width = (int)(bitmap.Width / 6);
                 for (int j = 0; j < captchaPattern.Length; j++)
                 {
-                    int angle = rand.Next(-30, 30);
+                    int angle_small = Convert.ToInt32(tb_angle_small.Text);
+                    int angle_big = Convert.ToInt32(tb_angle_big.Text);
+
+                    int angle = rand.Next(angle_small, angle_big);
 
                     float dx = (float)(j * char_width + char_width / 2);
                     float dy = (float)(bitmap.Height / 2);
