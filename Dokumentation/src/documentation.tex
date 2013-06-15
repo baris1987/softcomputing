@@ -1,0 +1,38 @@
+\documentclass[a4paper,11pt]{report}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{titling}
+\bibliographystyle{alpha}
+\usepackage[left=2.5cm,right=2.5cm]{geometry}
+\usepackage{floatrow}
+
+%PDF Hyperlinks
+\usepackage{hyperref}
+\hypersetup{pdftex}
+\usepackage{hypcap}
+
+% Add subtitle-command
+\newcommand{\subtitle}[1]{%
+  \posttitle{%
+    \par\end{center}
+    \begin{center}\large#1\end{center}
+    \vskip0.5em}%
+}
+
+\title{Neuronale Netze}
+\subtitle{Praktische Anwendung bei der automatischen Erkennung von Captchas}
+\author{Baris Akdag, Christopher Althaus, Matthias Jentsch}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+% Hier bitte alle selbst geschriebenen Kapiel einfügen. 
+\include{aufgabenbeschreibung}
+
+\nocite{*}
+\bibliography{Quellen.bib}
+
+\end{document}
