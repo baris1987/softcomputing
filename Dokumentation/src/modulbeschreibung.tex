@@ -1,7 +1,7 @@
 \section{Modulbeschreibung}
 Zur Umsetzung des Projekts wurde verschiedene Module implementiert, welche im Folgenden der Reihe nach, näher beschrieben werden sollen.
 \subsection{Preprocessor}
-Da die Captcha vom Captcha Generator mit Artefakten versehen worden sind, welche das maschinelle Erkennen erschweren sollen, wird im Modul ''preprocess'' versucht diese Artefakte vollständig zu entfernen, welches im folgendem dargestellt ist.
+Der Preprocessor bereinigt das ihm übergebene Captcha um die Artefakte.
 \begin{lstlisting}
 function cleaned = preprocess(image)
 
@@ -12,4 +12,206 @@ end
 \end{lstlisting}
 Das Modul nimmt als einzigen Parameter ein Capture als Bild entgegen und gibt als Rückgabewert das von Artefakten bereinigte Bild zurück. Da in diesem Projekt die Neuronalen Netze im Vordergrund standen, ist die Bereinigung des Bildes denkbar einfach. Die vom Generator erzeugten Artefakte haben stets einen Grauwert, welcher über 65 liegt. Deshalb wird zunächst die Matlab Funktion 'rgb2gray' auf das übergebene Bild angewendet, welche das Bild in Graustufen umwandelt.\\
 Anschließend werden in der Matrix cleaned, die Bildpunkte, deren Grauwert kleiner 65 ist auf eins gesetzt und alle anderen auf null.
+\newpage
+\subsection{Segmentierung}
+Dieses Modul segmentiert das übergebene Bild in die einzelnen Buchstaben.
+\begin{lstlisting}
+function [retVal] = segment(bounded)
 
+    retVal = zeros(30, 30, 6);
+
+    cc = bwconncomp(bounded);
+    labeled = labelmatrix(cc);
+  
+    charIndex = 1;
+    while (charIndex <= 6)
+
+        % Sucht die Position der einzelnen Pixel mit der gegebenen Buchstabenposition
+        [yPx,xPx] = find(labeled == charIndex);
+        singleChar = zeros(size(bounded)); 
+
+        % Fuegt die Pixel des einzelnen Buchstaben in die leere Matrix ein
+        singleChar(labeled == charIndex)= bounded(labeled == charIndex); 
+
+        % Schneidet das einzelne Zeichen aus dem Gesamtbild heraus
+        a = imcrop(singleChar, [min(xPx),  min(yPx),  max(xPx) - min(xPx), max(yPx) -  min(yPx)]);
+        [charRows, charCols] = size(a);
+
+        % Aendert die Matrixgroesse auf 30x30
+        a = padarray(a, [(30 - charRows) (30 - charCols)], 'post');
+        
+        % Speichert das Bild in den Returnwert
+        retVal(:,:,charIndex) = a;
+        charIndex = charIndex + 1;
+    end
+end
+\end{lstlisting}
+Die Segmentierungs-Funnktion erhält als Parameter das aufgearbeitete Bild des Preprocessors und gibt als Rückgabewert sechs(es existieren stets sechs Zeichen pro Captcha) Matrizen der Größe 30x30 als dreidimensionales Array zurück.\\
+Zunächst wird in Zeile 3 der Rückgabewert angelegt und die Matizen mit Null initialisiert.\\
+Zum eigentlichen segmentieren der Zeichen aus dem Bild werden die Matlab Funktionen 'bwconncomp' und 'labelmatrix' verwenden, wobei 'bwconncomp' zusammenhängende Teile im Bild findet und 'labelmatrix' diese gefundenen Teile beginnend bei 1 durchnummeriert. Das heißt, dass in der Matrix 'labeled' jedes der sechs im Captcha enthaltenen Zeichen nach Ausführung der sechsten Zeile durch eine bestimmte Zahl dargestellt wird. Die Pixel des ersten Zeichen wären also 1, die Pixel des zweiten Zeichens 2 und so weiter.\\
+Nachfolgend werden die einzelnen Zeichen der Reihe nach in die Variable 'retVal' abgelegt. Dazu wird in einer while Schleife jedes einzelne Zeichen extrahiert (Zeilen 11-19) aus dem Gesamtbild extrahiert und anschließend in eine 30x30 große Matrix eingefügt (Zeile 23). 
+\newpage
+\subsection{Klassifizierung}
+Das Klassifizierungsmodul berechnet den Input aus den übergebenen segmentierten Zeichen eines Captchas und ruft damit das Neuronale Netz auf, welches für den Input eine Korrelation für die 36 Outputs erstellt.
+\begin{lstlisting}
+function decoded = classify(chars)
+    load neuronal;
+    decoded = char(zeros(1,6));
+    
+    for i=1:6
+        inVP = sum(chars(:,:,i),2);
+        inHP = sum(chars(:,:,i)',2);
+        res = net([inVP;inHP]);
+   
+        % Sucht den Rueckgabewert mit der besten Korrelation
+        index = find(res == max(res), 1);
+        
+        % Konvertiert das Rueckgabe-Ergebnis zurueck zu einem ASCII Zeichen
+        if (index <= 10)
+            index = index + 47;
+        elseif (index >= 11 && index <= 36)
+            index = index + 54;
+        end
+
+        decoded(i) = char(index);
+    end
+end
+\end{lstlisting}
+Zunächst wird in Zeile zwei das gespeicherte neuronale Netz geöffnet. Dieses gespeicherte Netz enthält die Variable 'net', mit welcher später auf das Netz zugegriffen werden kann. In Zeile drei wird die Rückgabe in Form eines char Feld mit der Größe von sechs Feldern erzeugt.\\
+Anschließend wird in den Zeilen sechs und sieben die Anzahl der vertikalen und horizontalen Pixel eines Zeichens gezählt. Dabei entsteht jeweils eine Matrix mit 30 Einträgen. Diese Matrizen werden aneinandergehängt und sind der Input für das neuronale Netz.\\
+In der Variable 'res' ist nach der Ausführung von Zeile 8 eine Korrelation für die 36 möglichen Zeichen. Das Zeichen, dessen Korrelation am höchsten ist wird ausgewählt und anschließend zurück zu einem ASCII Zeichen konvertiert (Zeilen 11 - 18). Zum Schluss wird das konvertierte Zeichen an der richtigen Position in der Variable 'decoded' gespeichert, welche nach der Ausführung zurückgegeben wird. 
+
+\newpage
+\subsection{Generator}
+Das 'buildNetwork' Modul generiert das neuronale Netz aus den Captcha Bildern, die im Trainingsordner abgespeichert sind.
+\begin{lstlisting}
+function [net, training] = buildNetwork()
+
+    trainingDir = '../images/Training/';
+    trainingSamples = dir(strcat(trainingDir, '*.png'));
+    [numTrainingSamples] = size(trainingSamples);
+    trainingSamplesSize = numTrainingSamples(1,1) * 6;
+    in = zeros(60,trainingSamplesSize);
+    out = zeros(36,trainingSamplesSize);
+    
+    % Erstellt ein Pattern Recognition Netzwerk
+    net = patternnet(38);
+    net.divideParam.valRatio = 0;
+    net.divideFcn = 'dividerand';
+    net.divideMode = 'sample';
+    net.divideParam.trainRatio = 70/100;
+    net.divideParam.valRatio = 15/100;
+    net.divideParam.testRatio = 15/100;
+    net.trainParam.goal = 0.0001;
+    net.performFcn='msereg'; 
+  
+    for i=1:numTrainingSamples
+        filename = strcat(trainingDir, trainingSamples(i).name);  
+        bounded = preprocess(imread(filename));     
+        chars = segment(bounded);
+        % Ordnerpfad von Dateinamen entfernen
+        filename = strrep(filename, trainingDir, '');
+        for j=1:6
+            % Konvertiert von ASCII zu int 
+            % Zahlen liegen nachher im Bereich 1 - 10
+            % Buchstaben liegen im Bereich 11 - 36
+            asciiz = uint8(filename(j));
+            if (asciiz >= 48 && asciiz <= 57)
+                asciiz = asciiz - 47;
+            elseif (asciiz >= 65 && asciiz <= 90)
+                asciiz = asciiz - 54;
+            end
+            % Summiert die Anzahl der Horizontalen und Vertikalen Pixel
+            inVP = sum(chars(:,:,j),2);
+            inHP = sum(chars(:,:,j)',2);
+            % Speichert die berechneten Matizen in den Input des Neuronalen
+            % Netzes und den Buchstabenwert in den Output
+            in(:,(i-1)*6+j) = [inVP;inHP];
+            out(asciiz,(i-1)*6+j) = 1;
+        end
+    end
+    % Trainiert das Netzwerk
+    [net, training] = train(net,in,out);       
+end
+\end{lstlisting}
+Die Generierungsfunktion, erwartet keine Parameter beim Aufruf und gibt als Rückgabewert das generierte neuronale Netz und dessen Trainingsdaten zurück.\\
+Damit ein Netz generiert werden kann müssen im Ordnerpfad '../images/Training/' Captcha gespeichert, deren Dateiname dem Inhalt des jeweiligen Captchas entspricht.\\
+Zunächst werden zwei Matrizen ('in' und 'out') erzeugt, in die für alle Captchas die zugehörigen Outputs zu den jeweiligen Inputs gespeichert werden.\\
+Das Neuronale Netz wird in den Zeilen 11 bis 19 initialisiert. Dabei wird die Anzahl der Inputs(60), Outputs(36) und der Hidden-Neuronen(38) festgelegt und es werden Feinabstimmungen des Netzes vorgenommen.\\
+Innerhalb der for Schleife werden auf die einzelnen Captchas der Reihe nach erst der Preprocessor und dann die Segmentierung angewendet. Anschließend wird der Input und der Output für jedes Zeichen eines Captchas erzeugt. Dabei wird für den Input wie bei der Klassifizierung auch, die Summe der horizontalen und vertikalen Pixel genutzt (Zeilen 38-42). Für den Output wird aus dem Dateinamen an der jeweiligen Position im Captcha das entsprechende Zeichen gesucht und daraufhin dessen Position innerhalb der Output Matrix auf eins gesetzt (Zeilen 31-35 und Zeile 43). Zum Schluss wird das Netzwerk mittels der Funktion 'train' trainiert, welche als Parameter das initialisierte Netz und die berechneten In- und Outputs bekommt. Als Rückgabe resultiert das generierte Netz und dessen Trainingsdaten.
+
+\newpage
+\subsection{Erkennung}
+Das 'recognize' Modul führt die Funktionen die für die Captcha-Erkennung nötig sind aus und liefert die erkannten Zeichen als Ergebnis zurück.
+\begin{lstlisting}
+function decoded = recognize(imageFileName)
+    % Prueft ob das Neuronale Netz existiert
+     if (exist('neuronal.mat', 'file') == 0)
+        fprintf('Neuronales Netz existiert nicht und wird jetzt generiert ...\n');
+        trainPerf = 1;
+        trainCount = 0;
+        while(trainPerf > 0.002 && trainCount < 5)
+            fprintf('%d. Generierung wird gestartet ...\n', trainCount+1);
+            [net, training] = buildNetwork();
+            if(trainPerf > training.best_perf)
+                trainPerf = training.best_perf;
+                save('neuronal.mat', 'net');
+            end
+            trainCount = trainCount + 1;
+        end
+    
+        fprintf('Fertig (Trainingsperformance: %f)\n', trainPerf);
+    end
+    % 1. Laedt das Bild und fuehrt das Preprocessing durch
+    preprocessed = preprocess(imread(imageFileName));
+    
+    % 2. Segmentiert das Bild
+    segmented = segment(preprocessed);
+    
+    % 3. Decodiert die Buchstaben
+    decoded = classify(segmented);
+end
+\end{lstlisting}
+Die Funktion erwartet als Parameter den Dateinamen eines Captchas und gibt ein char Feld mit den erkannten Zeichen zurück.\\
+Im vorab wird überprüft, ob das Neuronale Netz bereits existiert. Ist dies nicht der Fall, wird die Generierung des Netzes angestoßen(Zeile 9). Um ein möglichst gutes neuronales Netz zu bekommen, wird die Trainings Performance ausgewertet. Liegt die mittlere quadratische Fehlerabweichung über 0,002 wird eine erneute Generierung angestoßen. Maximal werden fünf Generierungen durchgeführt. Sollte auch dann die Trainingsperformance noch nicht unter 0.002 liegen, wird da bis dahin am besten generierte Netz benutzt.\\
+Ist das neuronale Netz generiert, werden der Reihe nach die Funktionen des Preprozessors, der Segmentierung und der Klassifizierung aufgerufen, wobei die Klassifizierung das Ergebnis zurückliefert, welches auch als Rückgabe an den Aufrufer der Erkennungs-Funktion zurückgegeben wird.
+\newpage
+\subsection{Testlauf}
+Das Modul 'runTest' dient hauptsächlich dem Testen des neuronalen Netzes. 
+\begin{lstlisting}
+function[charAcc, capAcc] = runTest()
+    testingDir = '../images/Test/';    
+    testingSamples = dir(strcat(testingDir, '*.png'));
+    numTestingSamples = size(testingSamples, 1);
+    charCorrect = 0;
+    charWrong = 0;
+    captureWrong = 0;
+    for i=1:numTestingSamples
+        filename =  testingSamples(i).name;
+        % Ruft die Recognize Funktion auf und bekommt die erkannten Zeichen zurueck
+        chars = recognize(strcat(testingDir,filename));
+        filename = strrep(filename, '.png', '');
+        fprintf('%d\t Aktuell: %s\t Erkannt: %s\t', i, filename, chars);
+        % Prueft komplettes Captcha auf Uebereinstimmung
+        if (strcmp(filename, chars) == 0)
+           fprintf(' NOK\n');
+           captureWrong = captureWrong + 1;
+        else
+           fprintf(' OK\n');
+        end
+        % Prueft die einzelnen Zeichen auf Uebereinstimmung
+        for j=1:6
+          if (strcmp(filename(j), chars(j)) == 0) 
+              charWrong = charWrong + 1;
+          else
+              charCorrect = charCorrect + 1;
+          end
+        end   
+     end
+     charAcc = charCorrect / (charCorrect + charWrong);
+     capAcc = (numTestingSamples - captureWrong) / numTestingSamples;
+     fprintf('Buchstaben Erkennungsrate: %f\n', charAcc);
+     fprintf('Captcha Erkennungsrate: %f\n', capAcc);
+end
+\end{lstlisting}
+Das Modul dient dem bequemen Auswerten der Erkennungsrate des neuronalen Netzes. Es erwartet keine Parameter, und gibt die Erkennungsrate der einzelnen Zeichen eines Captchas und die Erkennungsrate der gesamten Captchas aus dem Test Verzeichnis zurück.\\
