@@ -2,12 +2,22 @@ function decoded = recognize(imageFileName)
 
     % Prüft ob das Neuronale Netz existiert, falls nicht wird die
     % Generierung angestoßen
-    if (exist('neuronal.mat', 'file') == 0)
-        fprintf('Neuronales Netz existiert nicht und wird jetzt generiert ...');
-        buildNetwork();
-        fprintf('Fertig\n');
-    end
+     if (exist('neuronal.mat', 'file') == 0)
+        fprintf('Neuronales Netz existiert nicht und wird jetzt generiert ...\n');
+        trainPerf = 1;
+        trainCount = 0;
+        while(trainPerf > 0.002 && trainCount < 5)
+            fprintf('%d. Generierung wird gestartet ...\n', trainCount+1);
+            [net, training] = buildNetwork();
+            if(trainPerf > training.best_perf)
+                trainPerf = training.best_perf;
+                save('neuronal.mat', 'net');
+            end
+            trainCount = trainCount + 1;
+        end
     
+        fprintf('Fertig (Trainingsperformance: %f)\n', trainPerf);
+    end
     % 1. Lädt das Bild und führt das Preprocessing durch
     preprocessed = preprocess(imread(imageFileName));
     

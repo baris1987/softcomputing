@@ -1,5 +1,5 @@
 
-function buildNetwork()
+function [net, training] = buildNetwork()
 
     trainingDir = '../images/Training/';
     trainingSamples = dir(strcat(trainingDir, '*.png'));
@@ -8,13 +8,22 @@ function buildNetwork()
     in = zeros(60,trainingSamplesSize);
     out = zeros(36,trainingSamplesSize);
     % Create a Pattern Recognition Network
-    hiddenLayerSize = 38;
-    net = patternnet(hiddenLayerSize);
-
+    hidden = 38;
+    net = patternnet(hidden);
+    net.divideParam.valRatio = 0;
+    net.divideFcn = 'dividerand';
+    net.divideMode = 'sample';
     net.divideParam.trainRatio = 70/100;
     net.divideParam.valRatio = 15/100;
     net.divideParam.testRatio = 15/100;
+    
+    % Choose a Performance Function
+    % For a list of all performance functions type: help nnperformance
+    net.performFcn = 'mae';  % Mean squared error
 
+    net.trainParam.goal = 0.0001;
+
+    net.performFcn='msereg'; 
   
     for i=1:numTrainingSamples
         filename = strcat(trainingDir, trainingSamples(i).name);  
@@ -47,7 +56,6 @@ function buildNetwork()
         end
     end
     % Trainiert das Netzwerk
-    net = train(net,in,out);
-    % Speichert das neuronale Netz für die spätere Verwendung
-    save('neuronal.mat', 'net');
+    [net, training] = train(net,in,out);       
+    
 end

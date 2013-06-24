@@ -1,4 +1,4 @@
-\documentclass[a4paper,11pt]{report}
+\documentclass[10pt,a4paper]{article}
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
@@ -20,18 +20,54 @@
     \vskip0.5em}%
 }
 
-\title{Neuronale Netze}
-\subtitle{Praktische Anwendung bei der automatischen Erkennung von Captchas}
-\author{Baris Akdag, Christopher Althaus, Matthias Jentsch}
-\date{\today}
-
 \begin{document}
-\maketitle
+\begin{titlepage}
+\vspace*{1cm}
+\begin{center}
+\Huge
+Technische Hochschule Nürnberg\\
+\vspace*{2cm}
+\large
+ {\Large Projektarbeit im Wahlpflichtfach Softcomputig\\
+Dozent: Prof. Dr. Reinhard Eck\\}
+\vspace*{2cm}
+\Huge
+Neuronale Netze\\
+\large
+\vspace*{1cm}
+Praktische Anwendung bei der automatischen Erkennung von Captchas
+\vspace{1cm}
+
+\vspace{2cm}
+
+ \begin{tabular}{p{6 cm}p{6 cm}}
+    	vorgelegt von & {Christopher Althaus} \\
+		& {Baris Akdag} \\
+		& {Matthias Jentsch} \\
+		\\ & \\
+    	Abgabe:& 1. Juli 2013
+ \end{tabular}\\
+    
+
+
+\end{center}
+\end{titlepage}
+
 \tableofcontents
 
 % Hier bitte alle selbst geschriebenen Kapiel einfügen. 
-\include{aufgabenbeschreibung}
+\include{Fachartikel}
+% Motivation, Einsatz im täglichem Leben...,  //Baris
+% Captcha Generator //Baris
+% Lösungsansatz, Grober Programm Ablauf, Aufbau des Neuronalen Netzes //Matze
+% Bild aufbearbeitung (Toolbox image)// Matze
+% Segmentierung Klassifizierung // Christopher
 
+% Anleitung zur Benutzung // Christopher
+
+% Fazit // Baris + Überarbeitung 
+\include{Anhang}
+%Codedokumentation
 \nocite{*}
 \bibliography{Quellen.bib}
 
