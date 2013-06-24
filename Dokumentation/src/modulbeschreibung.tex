@@ -1,0 +1,15 @@
+\section{Modulbeschreibung}
+Zur Umsetzung des Projekts wurde verschiedene Module implementiert, welche im Folgenden der Reihe nach, näher beschrieben werden sollen.
+\subsection{Preprocessor}
+Da die Captcha vom Captcha Generator mit Artefakten versehen worden sind, welche das maschinelle Erkennen erschweren sollen, wird im Modul ''preprocess'' versucht diese Artefakte vollständig zu entfernen, welches im folgendem dargestellt ist.
+\begin{lstlisting}
+function cleaned = preprocess(image)
+
+	greyScale = rgb2gray(image);
+	cleaned = greyScale < 65;
+
+end
+\end{lstlisting}
+Das Modul nimmt als einzigen Parameter ein Capture als Bild entgegen und gibt als Rückgabewert das von Artefakten bereinigte Bild zurück. Da in diesem Projekt die Neuronalen Netze im Vordergrund standen, ist die Bereinigung des Bildes denkbar einfach. Die vom Generator erzeugten Artefakte haben stets einen Grauwert, welcher über 65 liegt. Deshalb wird zunächst die Matlab Funktion 'rgb2gray' auf das übergebene Bild angewendet, welche das Bild in Graustufen umwandelt.\\
+Anschließend werden in der Matrix cleaned, die Bildpunkte, deren Grauwert kleiner 65 ist auf eins gesetzt und alle anderen auf null.
+
