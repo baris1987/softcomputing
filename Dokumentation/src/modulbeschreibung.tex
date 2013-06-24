@@ -214,4 +214,5 @@ function[charAcc, capAcc] = runTest()
      fprintf('Captcha Erkennungsrate: %f\n', capAcc);
 end
 \end{lstlisting}
-Das Modul dient dem bequemen Auswerten der Erkennungsrate des neuronalen Netzes. Es erwartet keine Parameter, und gibt die Erkennungsrate der einzelnen Zeichen eines Captchas und die Erkennungsrate der gesamten Captchas aus dem Test Verzeichnis zurück.\\
+Das Modul dient dem einfachen Auswerten der Erkennungsrate des neuronalen Netzes. Es erwartet keine Parameter, und gibt die Erkennungsrate der einzelnen Zeichen eines Captchas und die Erkennungsrate der gesamten Captchas aus dem Test-Verzeichnis zurück.\\
+Das Modul durchläuft in einer for Schleife alle Test-Captcha die sich im Verzeichnis '../images/Test' befinden und ruft für diese die Erkennungs-Methode auf ('recognize' Zeile 12). Anschließend werden die vom neuronalen Netz erkannten Zeichen mit den Tatsächlich richtigen aus dem Dateinamen verglichen (Zeilen 15-28). Sind alle Captcha durchlaufen, wird die Gesamtfehlerquote pro Zeichen und pro Captcha ausgegeben.

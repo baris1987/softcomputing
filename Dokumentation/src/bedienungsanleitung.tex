@@ -1,0 +1,71 @@
+\section{Bedienungsanleitung}
+\subsection{Voraussetzungen}
+Um zu gewährleisten, dass die Matlab Module, dieses Projekts ordnungsgemäß funktionieren, wird eine Matlab Version R2013a oder höher mit folgenden Toolboxen benötigt:
+\begin{itemize}
+\item Neural Network Toolbox
+\item Image Processing Toolbox
+\end{itemize}
+Für die Ausführung des Captcha Generators wird lediglich das .Net Framework 2.0 benötigt.
+
+\subsection{Ordnerstruktur}
+Da die Matlab Module auf eine fest definierte Ordnerstruktur zugreifen, ist es wichtig diese einzuhalten. Die Ordnerstruktur sollte der folgenden entsprechen.
+\begin{verbatim}
+Matlab/
+  images/
+    Test/
+      Capture1.png
+      Capture2.png
+      ...
+    Training/
+      0ZEHSQ.png
+      TWU7P8.png
+      ...
+  src/
+    buildNetwork.m
+    classify.m
+    preprocess.m
+    recognize.m
+    runTest.m
+    segment.m
+\end{verbatim}
+Wichtig ist, dass die Ordner, in welchen sich die Captcha befinden einmal zum Matlab Pfad hinzugefügt wurden. Dies kann mit Hilfe des Matlab Datei Explorers getan werden:
+\begin{verbatim}
+Rechtsklick auf den Ordner 'images'
+  -> Add to Path
+    -> Selected Folders and Subfolders
+\end{verbatim}
+Wenn die Ordner zum Pfad hinzugefügt wurden, sollten diese grau hinterlegt dargestellt werden. Weiterhin ist zu beachten, dass man sich während der Ausführung der Module stets im Ordner '/src' befinden muss. Dies ist erst der Fall, wenn in der Pfadangabe des aktuellen Ordners von Matlab '/src' steht!
+\subsection{Generator}
+Sollen neue Captcha generiert werden, kann beim Generator unter Target der Zielordner angegeben werden, in welchen die Captcha gespeichert werden sollen. Unter Files legt die Anzahl der zu erzeugenen Captcha fest und Chars die Anzahl der Zeichen pro Captcha. Es gilt zu beachten, dass die Matlab Module auf sechs Zeichen pro Captcha programmiert wurden, und es deshalb ohne entsprechende Codeanpassungen zu Fehlern kommt, sollten mehr oder weniger Zeichen in einem Captcha enthalten sein.\\
+Mittels Angle lässt sich der Wertebereich des Neigungswinkels der Zeichen im Captcha eingrenzen.\\
+Die Generierung der Captcha wird mittels des Start Button gestartet. Sobald die Captcha generiert wurden, erscheint eine Messagebox, die die erfolgreiche Erstellung bestätigt.
+
+\subsection{Captcha Erkennung}
+Die Erkennung von Captchas erfolgt ausschließlich in Matlab. Für eine erfolgreiche Erkennung ist es wichtig, das der Ordner, in welchem sich das Bild befindet, zum Matlab Pfad hinzugefügt wurde. Wie dies funktioniert, wird unter dem Punkt Ordnerstruktur erklärt.\\
+Vor der Ausführung muss sich Matlab im Verzeichnis 'src' der Ordnerstruktur befinden. Die Abfrage eines einzelnen Captchas erfolgt mittels des 'recognize' Moduls, welches als Parameter den Namen der Bilddatei erwartet. Der Abruf erfolgt durch das Kommandofenster innerhalb von Matlab wie folgt:
+\begin{verbatim}
+>> recognize('ZVEEIO.png')
+
+ans =
+
+ZVEEIO
+\end{verbatim} 
+Wird die Anfrage nicht mit einem Semikolon abgeschlossen, gibt Matlab das Ergebnis direkt im Kommandofenster aus. Alternativ ist es auch möglich das Ergebnis der Abfrage einer Variable zuzuweisen:
+\begin{verbatim}
+>> capture = recognize('capture.png');
+>> capture
+
+capture =
+
+ZVEEIO
+\end{verbatim} 
+$\;$ \\
+Sollen mehrere Captcha gelöst werden, so können diese in den Ordner '/Test' der Ordnerstruktur gespeichert werden. Durch den Aufruf des Moduls 'runTest', werden automatisch alle Captcha durchlaufen, und die Ergebnisse direkt im Kommandofenster ausgegeben:
+\begin{verbatim}
+>> runTest();
+1	 Aktuell: 0E0HSQ	 Erkannt: 0E0HSQ	 OK
+2	 Aktuell: 0JDDQ2	 Erkannt: 0JDDQ2	 OK
+3	 Aktuell: 0K42MH	 Erkannt: 0K42MH	 OK
+4	 Aktuell: 1VVYE7	 Erkannt: 1VVYE7	 OK
+5	 Aktuell: 1XHLLA	 Erkannt: 1XHLLA	 OK
+\end{verbatim} 
