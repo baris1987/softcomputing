@@ -1,0 +1,106 @@
+\section{Konzept}
+
+Dieses Kapitel beschreibt die generellen Ziele, dass bei der
+Implementierung der einzelnen Programmteile und den geplanten Aufbau der Anwendung.
+
+Um eine hohe Erkennungsrate der Captchas zu erreichen und den Rechenaufwand
+gering zu halten, haben wir uns dazu entschieden
+uns nicht ausschließlich auf die Funktion des neuronalen Netzes zu verlassen
+und stattdessen im Programmablauf Vorbereitungsphasen zu integrieren, die die
+Daten für das neuronale Netz aufbereiten. Durch diese Aufbereitung wollen wir
+die Zahl der Inputneuronen gering halten und eventuelle Störsignale bereits Image
+Voraus entfernen.
+
+Aufgrund dieser Anforderungen haben wir uns bei der Umsetzung für Matlab entschieden, 
+da es bereits passende Erweiterungen zur Aufbereitung von Bildern und zum
+Erstellen von neuronalen Netzen speziell für die Mustererkennung bietet.
+
+
+\subsection{Ablaufphasen des Programms}
+
+Der Ablauf des Programms kann in folgende Grobe Phasen unterteilt werden: 
+
+\begin{itemize}
+
+\item Trainingsphase
+
+Erstellen des neuronalen Netzes.
+
+
+\item Einlesen und Aufbereiten der Captchas
+
+Liest die Captchas aus den Dateien ein und entfernt grobe Störsignale.
+
+
+\item Segmentierung
+
+Teilt die aufbereiteten Bilder in einzelne Zeichen und normalisiert die
+Ausrichtung.
+
+
+\item Datenaggregation
+
+Zusammenfassen von verwandten Datensätzen um die Anzahl der Eingaben zu reduzieren.
+
+
+\item Klassifizierung
+
+Erkennen der Zeichen durch das neuronale Netz
+
+\end{itemize}
+
+
+\subsubsection{Trainingsphase}
+
+Die Trainingsphase ist die Phase in der ein neuronales Netz zum Erkennen der
+Zeichen erstellt wird. Die Trainingsphase soll nur dann aufgerufen werden, wenn
+nicht bereits ein Vorbereitetes Netz existiert. In der Trainingsphase werden
+vorbereitete Captchas zusammen mit der Lösung eingelesen und analog zu den
+normalen Bildern aufbereitet. Die einzelnen Zeichen werden zusammen mit dem
+Ergebnis zum Trainieren des Neuronalen Netzes verwendet. Die Trainingsphase
+soll so lange andauern, bis sich zwischen den einzelnen Trainingsphasen keine
+relevante Verbesserung ergibt.
+
+
+\subsubsection{Einlesen und Aufbereiten der Captchas}
+
+In diesem Schritt werden alle Bilder aus einem Eingabeverzeichnis eingelesen und
+aufbereitet. Die Aufbereitung versucht alle Pixel, die nicht zum eigentlichen
+Text gehören herauszufiltern. Zudem werden Farben durch binäre Werte ersetzt
+die entweder Schwarz oder Weiß darstellen. Hierbei wird anhand eines
+Schwellwertes unterschieden ab wann ein Graustufenwert als Schwarz oder als
+Weiß gilt.
+
+
+\subsubsection{Segmentierung}
+
+Bei der Segmentierung wird versucht die Zeichen des Worts in einzelne Segmente
+zu unterteilen. Da das neuronale Netz eine konstante Menge an Eingabewerten
+benötigt wird zudem die Bilder der Segmente auf eine Einheitliche größe
+Festgelegt. Alle Zeichen werden auf die gleiche Art ausgerichtet um
+Verschiebungen auszugleichen.
+
+
+\subsubsection{Datenaggregation}
+
+Bei der Datenaggregation wird versucht die Menge an Eingabewerten zu reduzieren,
+ohne dabei viel Genauigkeit zu verlieren. Dies wird erreicht indem 
+die Summen aller Schwarzen Pixel pro Zeile und Spalte gebildet wird. 
+
+Ohne diese Aggregation, also bei direkter Eingabe aller Pixel in das
+neuronale Netz, wäre die Laufzeit des Lernvorgangs und der Mustererkennung zu
+hoch um das Programm sinnvoll verwenden zu können.
+
+
+\subsubsection{Klassifizierung}
+
+Die Klassifizierung benutzt das neuronale Netz, um die eigentliche
+Mustererkennung durchzuführen und so die einzelnen Buchstaben zu
+erkennen. Jede Summe aus der Datenaggregation wird als einzelner Eingabewert
+für das Netz verwendet. Diese Werte sollen in Matlab in Form eines Vektors zu
+einem Set aus Eingabewerten für ein einzelnes Zeichen zusammengefasst.
+
+
+\subsection{Struktur des neuronalen Netzes}
+
+\section{Aufbereitung von Bildern mit der Matlab-Image-Toolbox}
