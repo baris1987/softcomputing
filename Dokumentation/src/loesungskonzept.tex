@@ -129,16 +129,6 @@ einem Set aus Eingabewerten für ein einzelnes Zeichen zusammengefasst werden.
 
 \section{Struktur des neuronalen Netzes}
 
-\begin{wrapfigure}[15]{R}[0pt]{7cm}
-  \begin{center}
-    \includegraphics[width=12cm]{res/PatternNet-Aufbau.png}
-  \end{center}
-  \vspace{-5pt}
-  \caption{Aufbau des Neuronalen Netzes}
-  \vspace{-10pt}
-
-
-\end{wrapfigure}
 Um festzustellen wie viele Hidden-Neuronen das Netz braucht, wurde die Leistungsfähigkeit des Netzes bei verschiedensten Mengen an Neuronen getestet. Da der Anstieg der Leistungsfähigkeit ab $38$ Hidden-Neuronen aufhört, legen wir die Anzahl dieser auf $38$ fest.
 
 \subsection{Matlab - Die Klasse ``Patternnet''}
@@ -146,22 +136,24 @@ Um festzustellen wie viele Hidden-Neuronen das Netz braucht, wurde die Leistungs
 In der Matlab-Toolbox für neuronale Netze existiert bereits ein vorgefertigtes
 neuronales Netz für die Mustererkennung. Diese Klasse nennt sich ``Patternnet''
 und erbt von der Basisklasse ``nnet''. Die Klasse erstellt ein Feedforward-Netz
-mit der Lernfunktion ``trainscg'', die die Skalierte Gradientenmethode zum
-Berechnen der Extrema verwendet.
+mit der Lernfunktion ``trainscg'', die die Konjugierte Gradientenmethode zum
+Lösen der Gleichungssysteme, die die neuen Gewichtungen bestimmen, verwendet.
 
 
 \subsection{Transferfunktion}
- Als Transferfunktion wird die Funktion``tansig'' verwendet, die eine Gleichung der folgenden Form darstellt:
+ Als Transferfunktion wird ein Sigmoid mit der folgenden Gleichung verwendet:
 
 \begin{equation}
 n = tansig(n) =  \frac{2}{(1 + e^{-2*n})} - 1
 \end{equation}
 
-\subsection{Skalierte Gradientenmethode}
+Diese Funktion bewirkt, dass sich die Ausgabewerte eines Neurons ausschließlich
+im Bereich $[-1,1]$ befinden. Zudem ist die Funktion einfach ableitbar, was
+hilfreich beim aktualisieren der Gewichtungen während des Lernvorgangs ist.
 
-Die Skalierte Gradientenmethode wird verwendet um die Gewichtungen der
-Transferfunktion zu aktualisieren. 
+\begin{center}
+  \includegraphics[width=12cm]{res/PatternNet-Aufbau.png}
+\end{center}
 
-\newpage
 \section{Aufbereitung von Bildern mit der Matlab-Image-Toolbox}
 \label{images}
