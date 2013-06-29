@@ -1,6 +1,5 @@
 *
 !*.tex
 !*.bib
-!*.png
-!*.jpg
-!res/*
+!res/*.jpg
+!res/*.png
