@@ -28,21 +28,21 @@ Matlab/
     runTest.m
     segment.m
 \end{verbatim}
-Wichtig ist, dass die Ordner, in welchen sich die Captcha befinden einmal zum Matlab Pfad hinzugefügt wurden. Dies kann mit Hilfe des Matlab Datei Explorers getan werden:
+Wichtig ist, dass die Ordner, in welchen sich die Captchas befinden einmal zum Matlab Pfad hinzugefügt wurden. Dies kann mit Hilfe des Matlab Datei Explorers realisiert werden:
 \begin{verbatim}
 Rechtsklick auf den Ordner 'images'
   -> Add to Path
     -> Selected Folders and Subfolders
 \end{verbatim}
-Wenn die Ordner zum Pfad hinzugefügt wurden, sollten diese grau hinterlegt dargestellt werden. Weiterhin ist zu beachten, dass man sich während der Ausführung der Module stets im Ordner '/src' befinden muss. Dies ist erst der Fall, wenn in der Pfadangabe des aktuellen Ordners von Matlab '/src' steht!
+Wenn die Ordner zum Pfad hinzugefügt wurden, sollten diese grau hinterlegt dargestellt werden. Weiterhin ist zu beachten, dass man sich während der Ausführung der Module stets im Ordner ''/src'' befinden muss. Dies ist erst der Fall, wenn in der Pfadangabe des aktuellen Ordners von Matlab '/src' steht!
 \subsection{Generator}
-Sollen neue Captcha generiert werden, kann beim Generator unter Target der Zielordner angegeben werden, in welchen die Captcha gespeichert werden sollen. Unter Files legt die Anzahl der zu erzeugenen Captcha fest und Chars die Anzahl der Zeichen pro Captcha. Es gilt zu beachten, dass die Matlab Module auf sechs Zeichen pro Captcha programmiert wurden, und es deshalb ohne entsprechende Codeanpassungen zu Fehlern kommt, sollten mehr oder weniger Zeichen in einem Captcha enthalten sein.\\
+Sollen neue Captchas generiert werden, kann beim Generator unter Target der Zielordner angegeben werden, in welchem die Captchas gespeichert werden sollen. Unter Files wird die Anzahl der zu erzeugenen Captchas festgelegt und Chars legt die Anzahl der Zeichen pro Captcha fest. Es gilt zu beachten, dass die Matlab Module auf sechs Zeichen pro Captcha programmiert wurden, und es deshalb ohne entsprechende Codeanpassungen zu Fehlern kommt, sollten mehr oder weniger Zeichen in einem Captcha enthalten sein.\\
 Mittels Angle lässt sich der Wertebereich des Neigungswinkels der Zeichen im Captcha eingrenzen.\\
-Die Generierung der Captcha wird mittels des Start Button gestartet. Sobald die Captcha generiert wurden, erscheint eine Messagebox, die die erfolgreiche Erstellung bestätigt.
+Die Generierung der Captchas wird mittels des Start Button gestartet. Sobald die Captchas generiert wurden, erscheint eine Messagebox, die die erfolgreiche Erstellung bestätigt.
 
 \subsection{Captcha Erkennung}
-Die Erkennung von Captchas erfolgt ausschließlich in Matlab. Für eine erfolgreiche Erkennung ist es wichtig, das der Ordner, in welchem sich das Bild befindet, zum Matlab Pfad hinzugefügt wurde. Wie dies funktioniert, wird unter dem Punkt Ordnerstruktur erklärt.\\
-Vor der Ausführung muss sich Matlab im Verzeichnis 'src' der Ordnerstruktur befinden. Die Abfrage eines einzelnen Captchas erfolgt mittels des 'recognize' Moduls, welches als Parameter den Namen der Bilddatei erwartet. Der Abruf erfolgt durch das Kommandofenster innerhalb von Matlab wie folgt:
+Die Erkennung von Captchas erfolgt ausschließlich in Matlab. Für eine erfolgreiche Erkennung ist es wichtig, dass der Ordner, in welchem sich das Bild befindet, zum Matlab Pfad hinzugefügt wurde. Wie dies funktioniert, wird unter dem Punkt Ordnerstruktur erklärt.\\
+Vor der Ausführung muss sich Matlab im Verzeichnis ''/src'' der Ordnerstruktur befinden. Die Abfrage eines einzelnen Captchas erfolgt mittels des \textit{recognize} Moduls, welches als Parameter den Namen der Bilddatei erwartet. Der Abruf erfolgt durch das Kommandofenster innerhalb von Matlab:
 \begin{verbatim}
 >> recognize('ZVEEIO.png')
 
@@ -60,7 +60,7 @@ capture =
 ZVEEIO
 \end{verbatim} 
 $\;$ \\
-Sollen mehrere Captcha gelöst werden, so können diese in den Ordner '/Test' der Ordnerstruktur gespeichert werden. Durch den Aufruf des Moduls 'runTest', werden automatisch alle Captcha durchlaufen, und die Ergebnisse direkt im Kommandofenster ausgegeben:
+Sollen mehrere Captchas gelöst werden, so können diese in den Ordner ''/Test'' der Ordnerstruktur gespeichert werden. Durch den Aufruf des Moduls \textit{runTest}, werden automatisch alle Captchas durchlaufen, und die Ergebnisse direkt im Kommandofenster ausgegeben:
 \begin{verbatim}
 >> runTest();
 1	 Aktuell: 0E0HSQ	 Erkannt: 0E0HSQ	 OK

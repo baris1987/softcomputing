@@ -136,8 +136,8 @@ function [net, training] = buildNetwork()
 end
 \end{lstlisting}
 Die Generierungsfunktion, erwartet keine Parameter beim Aufruf und gibt als Rückgabewert das generierte neuronale Netz und dessen Trainingsdaten zurück.\\
-Damit ein Netz generiert werden kann müssen im Ordnerpfad ''../images/Training/'' Captcha gespeichert, deren Dateiname dem Inhalt des jeweiligen Captchas entspricht.\\
-Zunächst werden zwei Matrizen (\textit{in} und \textit{out}) erzeugt, in die für alle Captcha die zugehörigen Outputs zu den jeweiligen Inputs gespeichert werden.\\
+Damit ein Netz generiert werden kann, müssen im Ordnerpfad ''../images/Training/'' Captchas gespeichert sein, deren Dateiname dem Inhalt des jeweiligen Captchas entspricht.\\
+Zunächst werden zwei Matrizen (\textit{in} und \textit{out}) erzeugt, in die für alle Captchas die zugehörigen Outputs zu den jeweiligen Inputs gespeichert werden.\\
 Das neuronale Netz wird in den Zeilen 11 bis 19 initialisiert. Dabei wird die Anzahl der Inputs(60), Outputs(36) und der Hidden-Neuronen(38) festgelegt. Zudem werden weitere Feinabstimmungen des Netzes vorgenommen.\\
 Innerhalb der for-Schleife werden auf die einzelnen Captcha der Reihe nach erst der Preprocessor und dann die Segmentierung angewendet. Anschließend wird der Input und der Output für jedes Zeichen eines Captchas erzeugt. Dabei wird für den Input wie bei der Klassifizierung auch, die Summe der horizontalen und vertikalen Pixel genutzt (Zeilen 38-42). Für den Output wird aus dem Dateinamen an der jeweiligen Position im Captcha das entsprechende Zeichen gesucht und daraufhin dessen Position innerhalb der Output Matrix auf eins gesetzt (Zeilen 31-35 und Zeile 43). Zum Schluss wird das Netzwerk mittels der Funktion \textit{train} trainiert, welche als Parameter das initialisierte Netz und die berechneten In- und Outputs bekommt. Als Rückgabe resultiert das generierte Netz und dessen Trainingsdaten.
 
@@ -215,5 +215,5 @@ function[charAcc, capAcc] = runTest()
      fprintf('Captcha Erkennungsrate: %f\n', capAcc);
 end
 \end{lstlisting}
-Das Modul dient dem einfachen Auswerten der Erkennungsrate des neuronalen Netzes. Es erwartet keine Parameter, und gibt die Erkennungsrate der einzelnen Zeichen eines Captchas und die Erkennungsrate der gesamten Captcha aus dem Test-Verzeichnis zurück.\\
-Das Modul durchläuft in einer for Schleife alle Test-Captcha die sich im Verzeichnis ''../images/Test'' befinden und ruft für diese die Erkennungs-Methode auf (\textit{recognize} Zeile 12). Anschließend werden die vom neuronalen Netz erkannten Zeichen mit den tatsächlich richtigen aus dem Dateinamen verglichen (Zeilen 15-28). Sind alle Captcha durchlaufen, wird die Gesamtfehlerquote pro Zeichen und pro Captcha ausgegeben.
+Das Modul dient dem einfachen Auswerten der Erkennungsrate des neuronalen Netzes. Es erwartet keine Parameter, und gibt die Erkennungsrate der einzelnen Zeichen eines Captchas und die Erkennungsrate der gesamten Captchas aus dem Test-Verzeichnis zurück.\\
+Das Modul durchläuft in einer for Schleife alle Test-Captchas die sich im Verzeichnis ''../images/Test'' befinden und ruft für diese die Erkennungs-Methode auf (\textit{recognize} Zeile 12). Anschließend werden die vom neuronalen Netz erkannten Zeichen mit den tatsächlich richtigen aus dem Dateinamen verglichen (Zeilen 15-28). Sind alle Captchas durchlaufen, wird die Gesamtfehlerquote pro Zeichen und pro Captcha ausgegeben.
