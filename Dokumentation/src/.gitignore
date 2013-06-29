@@ -1,4 +1,5 @@
 *
+!res
 !*.tex
 !*.bib
 !res/*.jpg

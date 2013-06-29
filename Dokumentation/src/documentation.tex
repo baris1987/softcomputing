@@ -71,9 +71,11 @@ Praktische Anwendung bei der automatischen Erkennung von Captchas
 \tableofcontents
 
 % Hier bitte alle selbst geschriebenen Kapiel einfügen. 
-\include{Fachartikel}
+%\include{Fachartikel}
 % Motivation, Einsatz im täglichem Leben...,  						//Baris
-% Captcha Generator 												//Baris
+% Captcha Generator 
+\newpage
+\include{grundlagen}
 
 % Lösungsansatz, Grober Programm Ablauf, Aufbau des Neuronalen Netzes //Matze
 \include{loesungskonzept}
@@ -85,11 +87,15 @@ Praktische Anwendung bei der automatischen Erkennung von Captchas
 % Anleitung zur Benutzung 											// Christopher
 \newpage
 \include{bedienungsanleitung}
-% Fazit 															// Baris + Überarbeitung 
 
 %Codedokumentation													//Christopher
 \newpage
 \include{modulbeschreibung}
+
+% Fazit 															// Baris
+\newpage
+\include{fazit}
+
 \nocite{*}
 \bibliography{Quellen.bib}
 
