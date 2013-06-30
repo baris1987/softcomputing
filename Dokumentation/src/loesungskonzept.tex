@@ -5,14 +5,12 @@ den einzelnen Phasen des Programmes verfolgt wird. Eine detaillierte Dokumentati
 der konkreten Umsetzung befindet sich in Sektion \ref{module} - Modulbeschreibung.
 
 Um eine hohe Erkennungsrate der Captchas zu erreichen und den Rechenaufwand
-gering zu halten, haben wir uns dazu entschieden
+gering zu halten, haben wir uns dazu entschieden,
 uns nicht ausschließlich auf die Funktion des neuronalen Netzes zu verlassen
 und stattdessen im Programmablauf Vorbereitungsphasen zu integrieren, die die
 Daten für das neuronale Netz aufbereiten. Durch diese Aufbereitung wollen wir
-die Zahl der Inputneuronen gering halten und eventuelle Störsignale bereits Image
-Voraus entfernen.
-
-Aufgrund dieser Anforderungen haben wir uns bei der Umsetzung für Matlab entschieden, 
+die Zahl der Inputneuronen gering halten und eventuelle Störsignale bereits im
+Voraus entfernen. Aufgrund dieser Anforderungen haben wir uns bei der Umsetzung für Matlab entschieden, 
 da es bereits passende Erweiterungen zur Aufbereitung von Bildern und zum
 Erstellen von neuronalen Netzen speziell für die Mustererkennung bietet.
 
@@ -41,7 +39,7 @@ Ausrichtung.
 
 \item Datenaggregation
 
-Zusammenfassen von verwandten Datensätzen um die Anzahl der Eingaben zu reduzieren.
+Zusammenfassen von verwandten Datensätzen, um die Anzahl der Eingaben zu reduzieren.
 
 
 \item Klassifizierung
@@ -53,9 +51,9 @@ Erkennen der Zeichen durch das neuronale Netz
 
 \subsubsection{Trainingsphase}
 
-Die Trainingsphase ist die Phase in der ein neuronales Netz zum Erkennen der
-Zeichen erstellt wird. Die Trainingsphase soll nur dann aufgerufen werden, wenn
-nicht bereits ein Vorbereitetes Netz existiert. In der Trainingsphase werden
+Die Trainingsphase ist die Phase, in der ein neuronales Netz zum Erkennen der
+Zeichen erstellt wird. Sie soll nur dann aufgerufen werden, wenn
+nicht bereits ein vorbereitetes Netz existiert. In der Trainingsphase werden
 vorbereitete Captchas zusammen mit der Lösung eingelesen und analog zu den
 normalen Bildern aufbereitet. Die einzelnen Zeichen werden zusammen mit dem
 Ergebnis zum Trainieren des Neuronalen Netzes verwendet. Die Trainingsphase
@@ -74,9 +72,9 @@ relevante Verbesserung ergibt.
 
 In diesem Schritt werden alle Bilder aus einem Eingabeverzeichnis eingelesen und
 aufbereitet. Die Aufbereitung versucht alle Pixel, die nicht zum eigentlichen
-Text gehören herauszufiltern. Zudem werden Farben durch binäre Werte ersetzt
+Text gehören, herauszufiltern. Zudem werden Farben durch binäre Werte ersetzt,
 die entweder Schwarz oder Weiß darstellen. Hierbei wird anhand eines
-Schwellwertes unterschieden ab wann ein Graustufenwert als Schwarz oder als
+Schwellwertes unterschieden, ab wann ein Graustufenwert als Schwarz oder als
 Weiß gilt. Eine genauere Beschreibung der Aufarbeitung der Bilder befindet sich
 in Kapitel \ref{images} - Aufbereitung von Bildern mit der Matlab-Image-Toolbox.
 
@@ -95,10 +93,10 @@ in Kapitel \ref{images} - Aufbereitung von Bildern mit der Matlab-Image-Toolbox.
 \end{wrapfigure}
 
 
-Bei der Segmentierung wird versucht die Zeichen des Worts in einzelne Segmente
+Bei der Segmentierung wird versucht die Zeichen des Wortes in einzelne Segmente
 zu unterteilen. Da das neuronale Netz eine konstante Menge an Eingabewerten
-benötigt, wird zudem die Auflösung der Segmente auf eine Einheitliche größe
-Festgelegt. Alle Zeichen werden auf die gleiche Art ausgerichtet um
+benötigt, wird zudem die Auflösung der Segmente auf eine einheitliche Größe
+festgelegt. Alle Zeichen werden auf die gleiche Art ausgerichtet um
 Verschiebungen auszugleichen.
 
 \subsubsection{Datenaggregation}
@@ -115,11 +113,9 @@ Verschiebungen auszugleichen.
 
 Bei der Datenaggregation wird versucht die Menge an Eingabewerten zu reduzieren,
 ohne dabei viel Genauigkeit zu verlieren. Dies wird erreicht indem 
-die Summen aller Schwarzen Pixel pro Zeile und Spalte gebildet wird. 
-
-Ohne diese Aggregation, also bei direkter Eingabe aller Pixel in das
+die Summen aller Schwarzen Pixel pro Zeile und Spalte gebildet werden. Ohne diese Aggregation, also bei direkter Eingabe aller Pixel in das
 neuronale Netz, wäre die Laufzeit des Lernvorgangs und der Mustererkennung zu
-hoch um das Programm sinnvoll verwenden zu können.
+hoch, um das Programm sinnvoll verwenden zu können.
 \subsubsection{Klassifizierung}
 
 Die Klassifizierung benutzt das neuronale Netz, um die eigentliche
@@ -131,11 +127,11 @@ einem Set aus Eingabewerten für ein einzelnes Zeichen zusammengefasst werden.
 \section{Struktur des neuronalen Netzes}
 
 Um festzustellen wie viele Hidden-Neuronen das Netz braucht, wurde die
-Leistungsfähigkeit des Netzes bei verschiedensten Mengen an Neuronen getestet.
-Um die Leistungsfähigkeit der Netze auszuwerten wurde die Zahl der richtig
-erkannten Captchas ausgewertet. 
+Leistungsfähigkeit des Netzes bei verschiedenen Mengen an Neuronen getestet.
+Um die Leistungsfähigkeit der Netze festzustellen, wurde der Prozentsatz der richtig
+erkannten Captchas ausgewertet und mit den anderen Netzen verglichen. 
 
-Für jede Messung wurde automatisiert ein neues Neuronales Netz mit der aktuellen
+Für jede Messung wurde automatisiert ein neues neuronales Netz mit der aktuellen
 Anzahl der Hidden-Neuronen erstellt und dessen Leistungsfähigkeit gemessen.
 Die Ergebnisse der Messung sind in folgender Grafik dargestellt:
 
@@ -149,7 +145,7 @@ legen wir die Anzahl dieser auf $38$ fest.
 In der Matlab-Toolbox für neuronale Netze existiert bereits ein vorgefertigtes
 neuronales Netz für die Mustererkennung. Diese Klasse nennt sich ``Patternnet''
 und erbt von der Basisklasse ``nnet''. Die Klasse erstellt ein Feedforward-Netz
-mit der Lernfunktion ``trainscg'', die die Konjugierte Gradientenmethode zum
+mit der Lernfunktion ``trainscg'', die die konjugierte Gradientenmethode zum
 Lösen der Gleichungssysteme, die die neuen Gewichtungen bestimmen, verwendet.
 
 
@@ -185,9 +181,9 @@ hilfreich beim aktualisieren der Gewichtungen während des Lernvorgangs ist.
 \subsubsection{Lernfunktion}
 
 In jeder Runde des Lernvorgangs müssen die Gewichte des Netzes so verändert werden,
-dass sie möglichst nah am gewünschten Ausgangswert sind. Hierfür ist es
-notwendig ein Gleichungssystem zu lösen um den optimalen Wert zu finden. Die Lernfunktion
-des ``Patternnet'' verwendet hierfür die Konjugierte Gradientenmethode, die ein
+dass sie möglichst nah am gewünschten Ausgangswert liegen. Hierfür ist es
+notwendig ein Gleichungssystem zu lösen, um den optimalen Wert zu finden. Die Lernfunktion
+des ``Patternnet'' verwendet hierfür die konjugierte Gradientenmethode, die ein
 numerisches, iteratives Verfahren zum Lösen des Gleichungssystems darstellt.
 
 
@@ -195,13 +191,13 @@ numerisches, iteratives Verfahren zum Lösen des Gleichungssystems darstellt.
 \label{images}
 
 Für die Aufbereitung der Captchas werden Funktionen aus der Matlab
-Image-Toolbox verwendet. Die wichtigste ist hierbei die Funktion $regionprops$,
+Image-Toolbox verwendet. Die Wichtigste ist hierbei die Funktion $regionprops$,
 die dazu in der Lage ist, auf einem Bild Regionen mit bestimmten Eigenschaften
-zu markieren. So ist es beispielsweise möglich, Regionen die sich in ihren Farb-
-werten nicht stärker als ein bestimmter Grenzwert unterscheiden, zu markieren.
+zu markieren. So ist es beispielsweise möglich, Regionen die sich in ihren Farbwerten 
+nicht stärker als ein bestimmter Grenzwert unterscheiden, zu markieren.
 Mithilfe dieser Technik werden auf dem Captcha zusammenhängende Buchstaben 
 gefunden. Bei der Segmentierung, die in Sektion \ref{segment} beschrieben wird,
-ist es essenziell diese Regionen zu kennen um zu vermeiden, dass die Zeichen an
+ist es essenziell diese Regionen zu kennen, um zu vermeiden dass die Zeichen an
 der falschen Stelle zerteilt werden.
 
 % \subsection{Darstellung von Bildern in Matlab}
